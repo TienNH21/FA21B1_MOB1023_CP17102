@@ -1,6 +1,6 @@
 package lesson1_oop;
 
-public class SinhVien {
+public class SinhVien implements Workable {
     private String hoTen;
     private String maSV;
     private String diaChi;
@@ -18,6 +18,10 @@ public class SinhVien {
         this.maSV = maSV;
         this.diaChi = diaChi;
         this.soTienTrongVi = soTienTrongVi;
+    }
+
+    public void work() {
+        System.out.println("Đi học");
     }
 
     public String getHoten()

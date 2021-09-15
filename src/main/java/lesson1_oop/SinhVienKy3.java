@@ -27,4 +27,10 @@ public class SinhVienKy3 extends SinhVien
         super.xuatThongTin();
         System.out.println("Kỳ đang học: 3");
     }
+    
+    // Overloading
+    public void xuatThongTin(String chuyenNganh)
+    {
+        System.out.println("Chuyên ngành: " + chuyenNganh);
+    }
 }
