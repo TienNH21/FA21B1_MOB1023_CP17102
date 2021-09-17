@@ -5,4 +5,9 @@ public class Bird extends Animal implements Flyable {
     public void fly() {
         System.out.println("Flying ...");
     }
+
+    @Override
+    public void tiengKeu() {
+        System.out.println("ABC ...");
+    }
 }

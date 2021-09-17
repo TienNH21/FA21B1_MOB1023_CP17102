@@ -1,12 +1,10 @@
 package lesson2_interface;
 
-public class Animal {
+public abstract class Animal {
     private String ten;
     private int soChan;
     
-    public void tiengKeu() {
-        System.out.println("ABC");
-    }
+    public abstract void tiengKeu();
 
     public Animal() {
     }

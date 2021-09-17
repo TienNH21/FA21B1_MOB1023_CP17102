@@ -5,4 +5,9 @@ public class Cat extends Animal implements Runable {
     public void run() {
         System.out.println("Running ...");
     }
+
+    @Override
+    public void tiengKeu() {
+        System.out.println("Meow ...");
+    }
 }
