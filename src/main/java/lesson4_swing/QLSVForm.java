@@ -1,6 +1,15 @@
 package lesson4_swing;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import lesson3_luyen_tap_1.Nguoi;
+import lesson3_luyen_tap_1.QLNguoiInterface;
+import lesson3_luyen_tap_1.QuanLyDanhSach;
+import lesson3_luyen_tap_1.SinhVien;
+
 public class QLSVForm extends javax.swing.JFrame {
+    private QLNguoiInterface qlds;
+
     public QLSVForm() {
         /*
          * initComponents() là hàm của Netbean generate,
@@ -17,6 +26,8 @@ public class QLSVForm extends javax.swing.JFrame {
         
         // Mặc định chọn vào giới tính Nam
         this.radioNam.setSelected(true);
+        
+        this.qlds = new QuanLyDanhSach();
     }
 
     @SuppressWarnings("unchecked")
@@ -44,6 +55,8 @@ public class QLSVForm extends javax.swing.JFrame {
         btnXoa = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblSinhVien = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -84,15 +97,30 @@ public class QLSVForm extends javax.swing.JFrame {
 
         btnThem.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         btnXoa.setText("Xóa");
 
         btnClear.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -171,15 +199,46 @@ public class QLSVForm extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(102, 255, 204));
 
+        tblSinhVien.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã SV", "Họ Tên", "Giới tính", "Quê Quán", "Địa chỉ", "Chuyên ngành"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblSinhVien);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(219, 219, 219))
         );
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
@@ -193,9 +252,7 @@ public class QLSVForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(128, 128, 128)
@@ -210,7 +267,7 @@ public class QLSVForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -227,12 +284,79 @@ public class QLSVForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void hienThiTable() {
+        ArrayList<Nguoi> ds = this.qlds.getDanhSach();
+
+        /*
+         * Sử dụng DefaultTableModel để làm việc với dữ liệu trên JTable
+         */
+        DefaultTableModel dtm = (DefaultTableModel) this.tblSinhVien.getModel();
+        
+        for (int i = 0; i < ds.size(); i++) {
+            SinhVien sv = (SinhVien) ds.get(i);
+            
+            Object[] rowData = new Object[] {
+                sv.getMaSV(),
+                sv.getHoTen(),
+                sv.getGioiTinh(),
+                sv.getQueQuan(),
+                sv.getDiaChi(),
+                sv.getChuyenNganh(),
+            };
+
+            dtm.addRow(rowData);
+        }
+    }
+    
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        this.txtMaSV.setText("");
+        this.txtHoTen.setText("");
+        this.txtQueQuan.setText("");
+        this.txtDiaChi.setText("");
+        
+        this.radioNam.setSelected(true);
+        this.cbbChuyenNganh.setSelectedIndex(0);
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        String hoTen = this.txtHoTen.getText();
+        String queQuan = this.txtQueQuan.getText();
+        String diaChi = this.txtDiaChi.getText();
+        String maSV = this.txtMaSV.getText();
+        
+        String chuyenNganh = (String) this.cbbChuyenNganh.getSelectedItem();
+//        int gioiTinh = this.radioNam.isSelected() == true ? 1 : 0;
+        int gioiTinh;
+        if (this.radioNam.isSelected() == true) {
+            gioiTinh = 1;
+        } else {
+            gioiTinh = 0;
+        }
+        
+        Nguoi n = new SinhVien(maSV, chuyenNganh, hoTen, queQuan, diaChi, gioiTinh);
+        this.qlds.add(n);
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        String hoTen = this.txtHoTen.getText();
+        String queQuan = this.txtQueQuan.getText();
+        String diaChi = this.txtDiaChi.getText();
+        String maSV = this.txtMaSV.getText();
+        
+        String chuyenNganh = (String) this.cbbChuyenNganh.getSelectedItem();
+        int gioiTinh = this.radioNam.isSelected() == true ? 1 : 0;
+        
+        Nguoi n = new SinhVien(maSV, chuyenNganh, hoTen, queQuan, diaChi, gioiTinh);
+        
+        // TODO: Cập nhật vào ArrayList
+    }//GEN-LAST:event_btnSuaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -283,8 +407,10 @@ public class QLSVForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton radioNam;
     private javax.swing.JRadioButton radioNu;
+    private javax.swing.JTable tblSinhVien;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtMaSV;
