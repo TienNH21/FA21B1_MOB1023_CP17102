@@ -1,6 +1,7 @@
 package lesson4_swing;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import lesson3_luyen_tap_1.Nguoi;
 import lesson3_luyen_tap_1.QLNguoiInterface;
@@ -113,6 +114,11 @@ public class QLSVForm extends javax.swing.JFrame {
 
         btnXoa.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         btnClear.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         btnClear.setText("Clear");
@@ -222,6 +228,11 @@ public class QLSVForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblSinhVien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSinhVienMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSinhVien);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -255,7 +266,7 @@ public class QLSVForm extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
+                .addGap(192, 192, 192)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -298,7 +309,7 @@ public class QLSVForm extends javax.swing.JFrame {
          * Sử dụng DefaultTableModel để làm việc với dữ liệu trên JTable
          */
         DefaultTableModel dtm = (DefaultTableModel) this.tblSinhVien.getModel();
-        
+        dtm.setRowCount(0);
         for (int i = 0; i < ds.size(); i++) {
             SinhVien sv = (SinhVien) ds.get(i);
             
@@ -316,6 +327,10 @@ public class QLSVForm extends javax.swing.JFrame {
     }
     
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        clearForm();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void clearForm() {
         this.txtMaSV.setText("");
         this.txtHoTen.setText("");
         this.txtQueQuan.setText("");
@@ -323,8 +338,8 @@ public class QLSVForm extends javax.swing.JFrame {
         
         this.radioNam.setSelected(true);
         this.cbbChuyenNganh.setSelectedIndex(0);
-    }//GEN-LAST:event_btnClearActionPerformed
-
+    }
+    
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         String hoTen = this.txtHoTen.getText();
         String queQuan = this.txtQueQuan.getText();
@@ -332,19 +347,23 @@ public class QLSVForm extends javax.swing.JFrame {
         String maSV = this.txtMaSV.getText();
         
         String chuyenNganh = (String) this.cbbChuyenNganh.getSelectedItem();
-//        int gioiTinh = this.radioNam.isSelected() == true ? 1 : 0;
-        int gioiTinh;
-        if (this.radioNam.isSelected() == true) {
-            gioiTinh = 1;
-        } else {
-            gioiTinh = 0;
-        }
+        int gioiTinh = this.radioNam.isSelected() == true ? 1 : 0;
         
         Nguoi n = new SinhVien(maSV, chuyenNganh, hoTen, queQuan, diaChi, gioiTinh);
         this.qlds.add(n);
+        this.hienThiTable();
+        clearForm();
+        
+        JOptionPane.showMessageDialog(this, "Thêm mới thành công");
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int row = this.tblSinhVien.getSelectedRow();
+        
+        if ( row == -1 ) {
+            return ;
+        }
+        
         String hoTen = this.txtHoTen.getText();
         String queQuan = this.txtQueQuan.getText();
         String diaChi = this.txtDiaChi.getText();
@@ -356,7 +375,54 @@ public class QLSVForm extends javax.swing.JFrame {
         Nguoi n = new SinhVien(maSV, chuyenNganh, hoTen, queQuan, diaChi, gioiTinh);
         
         // TODO: Cập nhật vào ArrayList
+        this.qlds.edit(row, n);
+        this.hienThiTable();
+        JOptionPane.showMessageDialog(this, "Cập nhật thành công");
     }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void tblSinhVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSinhVienMouseClicked
+        // Hàm này sẽ được gọi khi user click vào 1 dòng trên JTable
+        int row = this.tblSinhVien.getSelectedRow();
+        
+        if (row == -1) {
+            return ;
+        }
+
+        SinhVien sv = (SinhVien) this.qlds.get(row);
+
+        this.txtHoTen.setText( sv.getHoTen() );
+        this.txtMaSV.setText( sv.getMaSV());
+        this.txtQueQuan.setText( sv.getQueQuan());
+        this.txtDiaChi.setText( sv.getDiaChi());
+        
+        if ( sv.getGioiTinh() == 1 ) {
+            this.radioNam.setSelected(true);
+        } else {
+            this.radioNu.setSelected(true);
+        }
+        
+        this.cbbChuyenNganh.setSelectedItem( sv.getChuyenNganh() );
+    }//GEN-LAST:event_tblSinhVienMouseClicked
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        int row = this.tblSinhVien.getSelectedRow();
+        if (row == -1) {
+            return ;
+        }
+
+        int xacNhan = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa không?");
+        System.out.println(xacNhan);
+        
+        if ( xacNhan == JOptionPane.YES_OPTION ) {
+            this.qlds.delete(row);
+            this.hienThiTable();
+            JOptionPane.showMessageDialog(this, "Xóa thành công");
+        } else if ( xacNhan == JOptionPane.NO_OPTION ) {
+            //
+        } else if ( xacNhan == JOptionPane.CANCEL_OPTION ) {
+            //
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class QuanLyDanhSach implements QLNguoiInterface {
     private ArrayList<Nguoi> ds;
+    
+    public QuanLyDanhSach() {
+        this.ds = new ArrayList<>();
+    }
 
     @Override
     public void add(Nguoi nguoi) {
