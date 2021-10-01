@@ -31,6 +31,7 @@ public class QuanLyDanhSach implements QLNguoiInterface {
 
     @Override
     public ArrayList<Nguoi> getDanhSach() {
+        // Exception -> try/catch
         return this.ds;
     }
 
