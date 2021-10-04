@@ -19,9 +19,12 @@ lesson2_interface/Flyable.class
 lesson3_luyen_tap_1/QLNguoiInterface.class
 lesson5_collection/MainClass.class
 lesson9_exception/DemoMultiException.class
+lesson10_file/DemoObjectIOStream.class
 lesson4_swing/QLSVForm$5.class
 lesson3_luyen_tap_1/MainClass.class
+lesson10_file/DemoDataIOStream.class
 lesson4_swing/QLSVForm$6.class
+lesson10_file/DemoFileIOStream.class
 lesson3_luyen_tap_1/QLDS_DB.class
 lesson2_interface/Animal.class
 lesson2_interface/Runable.class

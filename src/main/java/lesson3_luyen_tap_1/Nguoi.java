@@ -1,6 +1,8 @@
 package lesson3_luyen_tap_1;
 
-public class Nguoi {
+import java.io.Serializable;
+
+public class Nguoi implements Serializable {
     public String hoTen, queQuan, diaChi;
     public int gioiTinh;
 
