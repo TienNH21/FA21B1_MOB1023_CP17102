@@ -10,6 +10,7 @@ lesson4_swing/QLSVForm.class
 lesson2_interface/Cat.class
 lesson4_swing/QLSVForm$3.class
 lesson5_collection/DemoMap.class
+lesson11_character_io/DemoFileCharIO.class
 lesson4_swing/DemoSwing$1.class
 lesson9_exception/DemoExceptionFrame$1.class
 lesson1_oop/MainClass.class
@@ -35,3 +36,4 @@ lesson4_swing/QLSVForm$1.class
 lesson9_exception/DemoExceptionFrame$2.class
 lesson3_luyen_tap_1/QuanLyDanhSach.class
 lesson1_oop/Workable.class
+lesson11_character_io/DemoBufferedIO.class
